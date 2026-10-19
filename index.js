@@ -1,6 +1,7 @@
 import express from "express";
 import bodyParser from "body-parser";
 import pg from "pg";
+import ejs from "ejs"; // import explicite : Vercel doit voir ce module pour l'inclure
 import path from "path";
 import { fileURLToPath } from "url";
 
@@ -29,6 +30,8 @@ const db = databaseUrl
     });
 
 // --- Configuration Express ---------------------------------------------------
+app.engine("ejs", ejs.__express);
+app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public")); // en local ; sur Vercel, public/ est servi automatiquement
